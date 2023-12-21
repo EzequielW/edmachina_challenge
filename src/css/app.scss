@@ -1,0 +1,81 @@
+.text-primary-light {
+    color: $primary-light !important;
+}
+.bg-primary-light {
+    background: $primary-light !important;
+}  
+
+body {
+    color: $secondary;
+}
+
+.q-separator {
+    height: 2px;
+}
+
+.q-card {
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
+}
+
+.q-expansion-item {
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+}
+
+.q-expansion-item .q-item__section--avatar {
+    min-width: 0;
+}
+
+.q-expansion-item .q-item__section .q-icon {
+    font-size: 18px !important;
+}
+
+// Custom style for quasar timeline component
+.q-timeline li:nth-child(1) .q-timeline__dot:after {
+    top: 50%;
+}  
+
+.q-timeline__entry:last-child .q-timeline__dot:after {
+    height: 50%;
+    content: "";
+}
+
+.q-timeline--dense--right .q-timeline__dot:before {
+    top: calc(50% - 0.5rem - 12.5px);
+}
+
+.q-timeline--dense--right .q-timeline__dot {
+    top: 0;
+    left: 0 !important;
+}
+
+.timeline__month-title .q-timeline__dot {
+    left: 8px !important;
+}
+
+.q-timeline--dense--right .q-timeline__dot:after {
+    top: 0;
+}
+
+.q-timeline--dense--right .q-timeline__dot i {
+    top: calc(50% - 0.5rem - 15.5px);
+    z-index: 100;
+}
+
+.timeline__month-title .q-timeline__dot, .q-timeline__dot:after {
+    top: 0;
+}
+
+.timeline__month-title .q-timeline__dot:before {
+    display: none;
+}
+
+
+.q-timeline__title, .q-timeline__subtitle {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.q-timeline__content {
+    padding-bottom: 0.5rem;
+}
