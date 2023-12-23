@@ -1,6 +1,43 @@
 <template>
     <div class="q-px-lg q-py-md">
-        <div class="text-body1 text-weight-bold q-pb-lg">Timeline</div>
+        <div class="row justify-between q-pb-md">
+            <div class="text-body2 text-weight-bold q-pb-lg">Timeline</div>
+            <div class="row" style="gap: 11px">
+                <q-select
+                    outlined
+                    dense
+                    v-model="selectedYear"
+                    :options="yearList"
+                    label="Year"
+                    clearable
+                    style="min-width: 85px"
+                />
+                <q-select
+                    outlined
+                    dense
+                    v-model="selectedUser"
+                    :options="userList"
+                    :option-label="
+                        (item) => item.firstName + ' ' + item.lastName
+                    "
+                    label="Filter by User"
+                    clearable
+                    style="min-width: 140px"
+                />
+                <q-input
+                    outlined
+                    dense
+                    v-model="searchTerm"
+                    label="Search..."
+                    style="min-width: 240px"
+                >
+                    <template v-slot:append>
+                        <q-icon name="search" color="secondary" size="xs" />
+                    </template>
+                </q-input>
+            </div>
+        </div>
+
         <q-scroll-area style="height: 800px; width: 100%" :visible="true">
             <div
                 class="subtitle1 text-weight-bold text-primary-light"
@@ -292,11 +329,35 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
     setup() {
-        return {};
+        const selectedYear = ref<string>('');
+        const selectedUser = ref();
+        const searchTerm = ref<string>('');
+
+        const yearList = ref(['2023', '2022']);
+        const userList = ref([
+            {
+                id: 1,
+                firstName: 'Gerardo',
+                lastName: 'Moyano',
+            },
+            {
+                id: 2,
+                firstName: 'Jean',
+                lastName: 'Charleton',
+            },
+        ]);
+
+        return {
+            selectedYear,
+            selectedUser,
+            searchTerm,
+            yearList,
+            userList,
+        };
     },
 });
 </script>

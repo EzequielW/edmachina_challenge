@@ -1,10 +1,10 @@
 <template>
     <q-expansion-item
         expand-icon-toggle
-        expand-separator
         icon="drag_indicator"
         class="text-body1 text-weight-bolder"
         label="About"
+        header-class="handle"
         default-opened
     >
         <q-card>

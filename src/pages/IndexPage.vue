@@ -1,15 +1,26 @@
 <template>
     <q-page class="row justify-evenly">
-        <div class="col-3 q-pt-md q-pl-md">
-            <div class="q-pb-sm">
-                <StudentCard />
-            </div>
-            <div class="column">
-                <AboutUser />
-            </div>
+        <div class="col-3 q-py-md q-pl-md">
+            <q-scroll-area style="height: 1600px; width: 100%" :visible="true">
+                <div class="q-pb-sm">
+                    <StudentCard />
+                </div>
+                <draggable
+                    v-model="todos"
+                    class="q-gutter-sm"
+                    group="people"
+                    item-key="id"
+                    handle=".handle"
+                    animation="150"
+                >
+                    <template #item="{ element }">
+                        <component :is="element.component"></component>
+                    </template>
+                </draggable>
+            </q-scroll-area>
         </div>
-        <div class="col-9 q-pt-md q-px-md">
-            <div class="row justify-between">
+        <div class="col-9 q-py-md">
+            <div class="row justify-between q-px-md">
                 <q-breadcrumbs class="text-weight-bold">
                     <q-breadcrumbs-el label="Record Details" />
                     <q-breadcrumbs-el label="AYSI32392" />
@@ -17,13 +28,23 @@
                 <q-btn flat round color="secondary" icon="app_registration" />
             </div>
 
-            <q-tabs v-model="selectedTab" indicator-color="primary">
+            <q-tabs
+                class="q-px-md"
+                v-model="selectedTab"
+                indicator-color="primary"
+            >
                 <q-tab name="overview" label="Overview" no-caps />
                 <q-tab name="enrollment" label="Enrollment" no-caps />
                 <q-tab name="academic" label="Academic" no-caps />
             </q-tabs>
-            <q-separator />
-            <q-tab-panels v-model="selectedTab" animated class="bg-transparent">
+
+            <q-separator class="q-mx-md" />
+
+            <q-tab-panels
+                v-model="selectedTab"
+                animated
+                class="bg-transparent q-pa-md"
+            >
                 <q-tab-panel name="overview">
                     <div
                         class="row justify-evenly q-pb-lg q-pt-md"
@@ -36,6 +57,7 @@
                     </div>
 
                     <q-tabs
+                        class="overview-tabs"
                         v-model="selectedSubtab"
                         :align="'left'"
                         inline-label
@@ -56,7 +78,11 @@
                         />
                     </q-tabs>
 
-                    <q-tab-panels v-model="selectedSubtab" animated>
+                    <q-tab-panels
+                        class="overview-tab-panels"
+                        v-model="selectedSubtab"
+                        animated
+                    >
                         <q-tab-panel name="activity">
                             <UserActivity />
                         </q-tab-panel>
@@ -84,13 +110,16 @@
 </template>
 
 <script lang="ts">
-import { Todo, Meta } from 'components/models';
-import { defineComponent, ref } from 'vue';
+import { ComponentInstance } from 'components/models';
+import { defineComponent, ref, shallowRef } from 'vue';
+import draggable from 'vuedraggable';
 
 import UserActivity from 'src/components/UserActivity.vue';
 import StudentCard from 'src/components/StudentCard.vue';
 import StatsCard from 'src/components/StatsCard.vue';
 import AboutUser from 'src/components/AboutUser.vue';
+import AboutStudent from 'src/components/AboutStudent.vue';
+import CareerDetails from 'src/components/CareerDetails.vue';
 
 export default defineComponent({
     name: 'IndexPage',
@@ -99,37 +128,29 @@ export default defineComponent({
         StudentCard,
         StatsCard,
         AboutUser,
+        AboutStudent,
+        CareerDetails,
+        draggable,
     },
     setup() {
-        const todos = ref<Todo[]>([
+        const todos = shallowRef<ComponentInstance[]>([
             {
                 id: 1,
-                content: 'ct1',
+                component: AboutStudent,
             },
             {
                 id: 2,
-                content: 'ct2',
+                component: AboutUser,
             },
             {
                 id: 3,
-                content: 'ct3',
-            },
-            {
-                id: 4,
-                content: 'ct4',
-            },
-            {
-                id: 5,
-                content: 'ct5',
+                component: CareerDetails,
             },
         ]);
-        const meta = ref<Meta>({
-            totalCount: 1200,
-        });
         const selectedTab = ref<string>('overview');
         const selectedSubtab = ref<string>('activity');
 
-        return { todos, meta, selectedTab, selectedSubtab };
+        return { todos, selectedTab, selectedSubtab };
     },
 });
 </script>
@@ -141,5 +162,36 @@ export default defineComponent({
 
 .q-tab-panel {
     padding: 0;
+}
+
+.overview-tabs .q-tab--active {
+    background: #fff;
+}
+
+.overview-tabs .q-tab--inactive {
+    opacity: 0.4;
+}
+
+.overview-tabs .q-tab {
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
+}
+
+.overview-tabs {
+    background-color: transparent;
+    width: fit-content;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
+}
+
+.overview-tab-panels {
+    border-radius: 0 8px 8px 8px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
+}
+</style>
+
+<style lang="scss">
+.q-tab-panels .q-panel {
+    overflow: visible;
 }
 </style>

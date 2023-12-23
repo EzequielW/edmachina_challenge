@@ -57,6 +57,14 @@
         <q-page-container>
             <router-view />
         </q-page-container>
+
+        <q-footer>
+            <q-toolbar class="q-pa-lg">
+                <q-toolbar-title class="text-body1 text-weight-bold">
+                    COPYRIGHT <q-icon name="copyright" /> 2023 EdMachina
+                </q-toolbar-title>
+            </q-toolbar>
+        </q-footer>
     </q-layout>
 </template>
 
@@ -183,5 +191,10 @@ export default defineComponent({
     bottom: 0;
     top: unset;
     padding: 0;
+}
+
+.q-footer {
+    background-color: #eee;
+    color: #888;
 }
 </style>
