@@ -7,20 +7,24 @@
                     font-size="21px"
                     color="light-green-5"
                     text-color="white"
-                    icon="directions"
+                    :icon="icon"
                 />
 
                 <div class="column items-end">
-                    <div class="text-body2 text-weight-bold">Record Age</div>
-                    <div class="text-body1 text-weight-bolder">12 days</div>
+                    <div class="text-body2 text-weight-bold">{{ title }}</div>
+                    <div class="text-body1 text-weight-bolder">{{ stat }}</div>
                 </div>
             </div>
 
             <q-separator class="q-my-sm" />
 
             <div class="row justify-between">
-                <div class="text-body2 text-weight-bold">Created on</div>
-                <div class="text-body2 text-weight-bold">Jan 2, 2023</div>
+                <div class="text-body2 text-weight-bold">
+                    {{ subtitleLeft }}
+                </div>
+                <div class="text-body2 text-weight-bold">
+                    {{ subtitleRight }}
+                </div>
             </div>
         </q-card-section>
     </q-card>
@@ -30,6 +34,28 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
+    props: {
+        title: {
+            type: String,
+            required: true,
+        },
+        stat: {
+            type: String,
+            required: true,
+        },
+        icon: {
+            type: String,
+            required: true,
+        },
+        subtitleLeft: {
+            type: String,
+            required: true,
+        },
+        subtitleRight: {
+            type: String,
+            required: true,
+        },
+    },
     setup() {
         console.log('todo statscard');
     },

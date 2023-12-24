@@ -42,287 +42,82 @@
             <div
                 class="subtitle1 text-weight-bold text-primary-light"
                 style="padding-left: 40px"
+                v-if="Object.keys(activitesPerMonth).length > 0"
             >
-                September 2023
+                {{ formatActivityMonth(Object.keys(activitesPerMonth)[0]) }}
             </div>
             <q-timeline color="primary-light">
-                <q-timeline-entry icon="email">
-                    <q-card flat>
-                        <q-card-section>
-                            <div class="row justify-between q-pb-sm">
-                                <div class="subtitle1 text-weight-bold">
-                                    <span class="text-primary-light">
-                                        Email sent
-                                    </span>
-                                    by Gerardo Moyano
-                                </div>
-                                <div class="subtitle1 text-weight-bold">
-                                    Sep 23, 2023 - 1:45pm
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="subtitle1 text-weight-bold">
-                                    Upselling email sent.
-                                    <a class="text-primary-light" href="#"
-                                        >View Email</a
-                                    >
-                                </div>
-                            </div>
-                        </q-card-section>
-                    </q-card>
-                </q-timeline-entry>
+                <template
+                    v-for="(month, key, index) in activitesPerMonth"
+                    :key="'activity_month_' + index"
+                >
+                    <q-timeline-entry
+                        v-if="index !== 0"
+                        class="timeline__month-title"
+                    >
+                        <div
+                            class="subtitle1 text-weight-bold text-primary-light"
+                        >
+                            {{ formatActivityMonth(key.toString()) }}
+                        </div>
+                    </q-timeline-entry>
 
-                <q-timeline-entry icon="chat">
-                    <q-card flat>
-                        <q-card-section>
-                            <div class="row justify-between q-pb-sm">
-                                <div class="subtitle1 text-weight-bold">
-                                    <span class="text-primary-light">
-                                        Email sent
-                                    </span>
-                                    by Gerardo Moyano
+                    <q-timeline-entry
+                        v-for="(activity, aIndex) in month"
+                        :icon="
+                            getIcon(activity.type)
+                                ? getIcon(activity.type)
+                                : undefined
+                        "
+                        :class="
+                            !getIcon(activity.type) &&
+                            'q-timeline__entry--no-icon'
+                        "
+                        :key="'activity_' + aIndex"
+                    >
+                        <q-card flat>
+                            <q-card-section>
+                                <div class="row justify-between q-pb-sm">
+                                    <div class="subtitle1 text-weight-bold">
+                                        <span class="text-primary-light">
+                                            {{ getTitle(activity.type) }}
+                                        </span>
+                                        {{
+                                            (activity.type === 'call'
+                                                ? ' from '
+                                                : ' by ') +
+                                            activity.user.firstName +
+                                            ' ' +
+                                            activity.user.lastName
+                                        }}
+                                    </div>
+                                    <div class="subtitle1 text-weight-bold">
+                                        {{
+                                            formatActivityDate(
+                                                activity.createdAt
+                                            )
+                                        }}
+                                    </div>
                                 </div>
-                                <div class="subtitle1 text-weight-bold">
-                                    Sep 23, 2023 - 1:45pm
-                                </div>
-                            </div>
-                            <div class="column">
-                                <div class="subtitle1 text-weight-bold">
-                                    Upselling email sent.
-                                    <a class="text-primary-light" href="#"
-                                        >View Email</a
+                                <div class="row">
+                                    <div
+                                        class="subtitle1 text-weight-bold"
+                                        style="white-space: pre"
                                     >
+                                        {{ activity.description }}
+                                        <a
+                                            v-if="activity.url"
+                                            class="text-primary-light"
+                                            href="#"
+                                        >
+                                            View Email
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="subtitle1 text-weight-bold">
-                                    Upselling email sent.
-                                    <a class="text-primary-light" href="#"
-                                        >View Email</a
-                                    >
-                                </div>
-                            </div>
-                        </q-card-section>
-                    </q-card>
-                </q-timeline-entry>
-
-                <q-timeline-entry class="timeline__month-title">
-                    <div class="subtitle1 text-weight-bold text-primary-light">
-                        August 2023
-                    </div>
-                </q-timeline-entry>
-
-                <q-timeline-entry icon="school">
-                    <q-card flat>
-                        <q-card-section>
-                            <div class="row justify-between q-pb-sm">
-                                <div class="subtitle1 text-weight-bold">
-                                    <span class="text-primary-light">
-                                        Email sent
-                                    </span>
-                                    by Gerardo Moyano
-                                </div>
-                                <div class="subtitle1 text-weight-bold">
-                                    Sep 23, 2023 - 1:45pm
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="subtitle1 text-weight-bold">
-                                    Upselling email sent.
-                                    <a class="text-primary-light" href="#"
-                                        >View Email</a
-                                    >
-                                </div>
-                            </div>
-                        </q-card-section>
-                    </q-card>
-                </q-timeline-entry>
-
-                <q-timeline-entry icon="school">
-                    <q-card flat>
-                        <q-card-section>
-                            <div class="row justify-between q-pb-sm">
-                                <div class="subtitle1 text-weight-bold">
-                                    <span class="text-primary-light">
-                                        Email sent
-                                    </span>
-                                    by Gerardo Moyano
-                                </div>
-                                <div class="subtitle1 text-weight-bold">
-                                    Sep 23, 2023 - 1:45pm
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="subtitle1 text-weight-bold">
-                                    Upselling email sent.
-                                    <a class="text-primary-light" href="#"
-                                        >View Email</a
-                                    >
-                                </div>
-                            </div>
-                        </q-card-section>
-                    </q-card>
-                </q-timeline-entry>
-
-                <q-timeline-entry icon="school">
-                    <q-card flat>
-                        <q-card-section>
-                            <div class="row justify-between q-pb-sm">
-                                <div class="subtitle1 text-weight-bold">
-                                    <span class="text-primary-light">
-                                        Email sent
-                                    </span>
-                                    by Gerardo Moyano
-                                </div>
-                                <div class="subtitle1 text-weight-bold">
-                                    Sep 23, 2023 - 1:45pm
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="subtitle1 text-weight-bold">
-                                    Upselling email sent.
-                                    <a class="text-primary-light" href="#"
-                                        >View Email</a
-                                    >
-                                </div>
-                            </div>
-                        </q-card-section>
-                    </q-card>
-                </q-timeline-entry>
-
-                <q-timeline-entry icon="school">
-                    <q-card flat>
-                        <q-card-section>
-                            <div class="row justify-between q-pb-sm">
-                                <div class="subtitle1 text-weight-bold">
-                                    <span class="text-primary-light">
-                                        Email sent
-                                    </span>
-                                    by Gerardo Moyano
-                                </div>
-                                <div class="subtitle1 text-weight-bold">
-                                    Sep 23, 2023 - 1:45pm
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="subtitle1 text-weight-bold">
-                                    Upselling email sent.
-                                    <a class="text-primary-light" href="#"
-                                        >View Email</a
-                                    >
-                                </div>
-                            </div>
-                        </q-card-section>
-                    </q-card>
-                </q-timeline-entry>
-
-                <q-timeline-entry class="timeline__month-title">
-                    <div class="subtitle1 text-weight-bold text-primary-light">
-                        July 2023
-                    </div>
-                </q-timeline-entry>
-
-                <q-timeline-entry icon="school">
-                    <q-card flat>
-                        <q-card-section>
-                            <div class="row justify-between q-pb-sm">
-                                <div class="subtitle1 text-weight-bold">
-                                    <span class="text-primary-light">
-                                        Email sent
-                                    </span>
-                                    by Gerardo Moyano
-                                </div>
-                                <div class="subtitle1 text-weight-bold">
-                                    Sep 23, 2023 - 1:45pm
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="subtitle1 text-weight-bold">
-                                    Upselling email sent.
-                                    <a class="text-primary-light" href="#"
-                                        >View Email</a
-                                    >
-                                </div>
-                            </div>
-                        </q-card-section>
-                    </q-card>
-                </q-timeline-entry>
-
-                <q-timeline-entry icon="school">
-                    <q-card flat>
-                        <q-card-section>
-                            <div class="row justify-between q-pb-sm">
-                                <div class="subtitle1 text-weight-bold">
-                                    <span class="text-primary-light">
-                                        Email sent
-                                    </span>
-                                    by Gerardo Moyano
-                                </div>
-                                <div class="subtitle1 text-weight-bold">
-                                    Sep 23, 2023 - 1:45pm
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="subtitle1 text-weight-bold">
-                                    Upselling email sent.
-                                    <a class="text-primary-light" href="#"
-                                        >View Email</a
-                                    >
-                                </div>
-                            </div>
-                        </q-card-section>
-                    </q-card>
-                </q-timeline-entry>
-
-                <q-timeline-entry icon="school">
-                    <q-card flat>
-                        <q-card-section>
-                            <div class="row justify-between q-pb-sm">
-                                <div class="subtitle1 text-weight-bold">
-                                    <span class="text-primary-light">
-                                        Email sent
-                                    </span>
-                                    by Gerardo Moyano
-                                </div>
-                                <div class="subtitle1 text-weight-bold">
-                                    Sep 23, 2023 - 1:45pm
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="subtitle1 text-weight-bold">
-                                    Upselling email sent.
-                                    <a class="text-primary-light" href="#"
-                                        >View Email</a
-                                    >
-                                </div>
-                            </div>
-                        </q-card-section>
-                    </q-card>
-                </q-timeline-entry>
-
-                <q-timeline-entry icon="school">
-                    <q-card flat>
-                        <q-card-section>
-                            <div class="row justify-between q-pb-sm">
-                                <div class="subtitle1 text-weight-bold">
-                                    <span class="text-primary-light">
-                                        Email sent
-                                    </span>
-                                    by Gerardo Moyano
-                                </div>
-                                <div class="subtitle1 text-weight-bold">
-                                    Sep 23, 2023 - 1:45pm
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="subtitle1 text-weight-bold">
-                                    Upselling email sent.
-                                    <a class="text-primary-light" href="#"
-                                        >View Email</a
-                                    >
-                                </div>
-                            </div>
-                        </q-card-section>
-                    </q-card>
-                </q-timeline-entry>
+                            </q-card-section>
+                        </q-card>
+                    </q-timeline-entry>
+                </template>
             </q-timeline>
         </q-scroll-area>
     </div>
@@ -330,12 +125,36 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import { UserActivity } from './models';
+import { computed } from 'vue';
+import moment from 'moment';
 
 export default defineComponent({
-    setup() {
+    props: {
+        userActivities: {
+            type: Object as () => UserActivity[],
+            required: true,
+        },
+    },
+    setup(props) {
         const selectedYear = ref<string>('');
         const selectedUser = ref();
         const searchTerm = ref<string>('');
+
+        const activitesPerMonth = computed(() => {
+            const months: any = {};
+
+            props.userActivities.forEach((activity) => {
+                const monthKey = activity.createdAt.slice(0, 7);
+
+                if (!(monthKey in months)) {
+                    months[monthKey] = [];
+                }
+                months[monthKey].push(activity);
+            });
+
+            return months;
+        });
 
         const yearList = ref(['2023', '2022']);
         const userList = ref([
@@ -351,12 +170,61 @@ export default defineComponent({
             },
         ]);
 
+        const getIcon = (type: string) => {
+            switch (type) {
+                case 'email':
+                    return 'email';
+                case 'chat':
+                    return 'chat';
+                case 'call':
+                    return 'call';
+                case 'assigment':
+                    return 'school';
+                case 'initial_contact':
+                    return 'email';
+                default:
+                    return '';
+            }
+        };
+
+        const getTitle = (type: string) => {
+            switch (type) {
+                case 'email':
+                    return 'Email Sent';
+                case 'chat':
+                    return 'Chat Meeting';
+                case 'call':
+                    return 'Call';
+                case 'assigment':
+                    return 'LMS Assigment Delivered';
+                case 'initial_contact':
+                    return 'Initial Contact';
+                case 'tag_added':
+                    return 'Tags Added';
+                default:
+                    return '';
+            }
+        };
+
+        const formatActivityMonth = (date: string) => {
+            return moment(date, 'YYYY-MM').format('MMMM YYYY');
+        };
+
+        const formatActivityDate = (date: string) => {
+            return moment(date).format('MMM D, YYYY - h:mm a');
+        };
+
         return {
             selectedYear,
             selectedUser,
             searchTerm,
             yearList,
             userList,
+            activitesPerMonth,
+            getIcon,
+            getTitle,
+            formatActivityMonth,
+            formatActivityDate,
         };
     },
 });

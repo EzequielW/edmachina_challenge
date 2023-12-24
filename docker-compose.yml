@@ -1,0 +1,20 @@
+version: '3.9'
+services:
+  edmachina:
+    build:
+      context: .
+      target: 'develop-stage'
+    ports:
+      - '9000:9000'
+    volumes:
+      - '.:/home/node/'
+    command: /bin/sh -c "npm install && quasar dev"
+    environment:
+      - VUE_APP_SERVER_URL=http://localhost:9001/
+  json-server:
+    build: 
+      context: .
+      dockerfile: fakeApi.Dockerfile
+    ports:
+      - 9001:9001
+    command: npm run fake-server

@@ -1,0 +1,242 @@
+{
+    "users": [
+        {
+            "id": 3,
+            "status": 1,
+            "role": {
+                "id": 3,
+                "name": "student"
+            },
+            "record_id": "AYSI32392",
+            "firstName": "Danielle",
+            "lastName": "Munchen Schollengberg",
+            "email": "danielle_munchen@gmail.com",
+            "phone": "5522126164",
+            "country": {
+                "id": 1,
+                "name": "México",
+                "phone_code": "52"
+            },
+            "state": {
+                "id": 1,
+                "name": "Cordoba"
+            },
+            "category": {
+                "id": 1,
+                "name": "Do Not Contact"
+            },
+            "createdAt": "2023-05-23T13:45:00",
+            "updatedAt": "2023-06-21T13:45:00",
+            "lastContact": "2023-08-21T13:45:00",
+            "lastActivity": "2023-10-21T13:45:00",
+            "activities": [
+                {
+                    "id": 1,
+                    "type": "email",
+                    "url": "https://www.example.com",
+                    "user": {
+                        "id": 1,
+                        "firstName": "Gerardo",
+                        "lastName": "Moyano",
+                        "role": {
+                            "id": 1,
+                            "name": "Admin"
+                        }
+                    },
+                    "description": "Upselling email sent.",
+                    "createdAt": "2023-09-23T13:45:00"
+                },
+                {
+                    "id": 2,
+                    "type": "chat",
+                    "url": "",
+                    "user": {
+                        "id": 2,
+                        "firstName": "Jean",
+                        "lastName": "Charleton",
+                        "role": {
+                            "id": 2,
+                            "name": "Professor"
+                        }
+                    },
+                    "description": "Whatsapp chat meeting.",
+                    "createdAt": "2023-09-02T13:45:00"
+                },
+                {
+                    "id": 3,
+                    "type": "assigment",
+                    "url": "",
+                    "user": {
+                        "id": 3,
+                        "firstName": "Danielle",
+                        "lastName": "Munchen Schollengberg",
+                        "role": {
+                            "id": 3,
+                            "name": "Student"
+                        }
+                    },
+                    "description": "For: \"Career Planning and Development\"\nAssignment Name: \"Quiz 01\", Delivered ON TIME\nGrade: TBD",
+                    "createdAt": "2023-08-05T17:33:00"
+                },
+                {
+                    "id": 4,
+                    "type": "call",
+                    "url": "",
+                    "user": {
+                        "id": 1,
+                        "firstName": "Gerardo",
+                        "lastName": "Moyano",
+                        "role": {
+                            "id": 1,
+                            "name": "Admin"
+                        }
+                    },
+                    "description": "Direct Call made to +52 55 22126164\nCall Duration: 0 min, 10 sec.",
+                    "createdAt": "2023-08-04T13:45:00"
+                },
+                {
+                    "id": 5,
+                    "type": "tag_added",
+                    "url": "",
+                    "user": {
+                        "id": 2,
+                        "firstName": "Jean",
+                        "lastName": "Charleton",
+                        "role": {
+                            "id": 2,
+                            "name": "Professor"
+                        }
+                    },
+                    "description": "Multiple Problems, Injuried, Check, Late",
+                    "createdAt": "2023-08-03T17:33:00"
+                },
+                {
+                    "id": 6,
+                    "type": "tag_added",
+                    "url": "",
+                    "user": {
+                        "id": 1,
+                        "firstName": "Gerardo",
+                        "lastName": "Moyano",
+                        "role": {
+                            "id": 1,
+                            "name": "Admin"
+                        }
+                    },
+                    "description": "Inactive, Control, Schollarship",
+                    "createdAt": "2023-08-02T13:45:00"
+                },
+                {
+                    "id": 7,
+                    "type": "email",
+                    "url": "https://www.example.com",
+                    "user": {
+                        "id": 2,
+                        "firstName": "Jean",
+                        "lastName": "Charleton",
+                        "role": {
+                            "id": 2,
+                            "name": "Professor"
+                        }
+                    },
+                    "description": "Check email sent.",
+                    "createdAt": "2023-08-02T13:45:00"
+                },
+                {
+                    "id": 8,
+                    "type": "call",
+                    "url": "",
+                    "user": {
+                        "id": 1,
+                        "firstName": "Gerardo",
+                        "lastName": "Moyano",
+                        "role": {
+                            "id": 1,
+                            "name": "Admin"
+                        }
+                    },
+                    "description": "Direct Call made to +52 55 22126164\nCall Duration: 1 min, 22 sec.",
+                    "createdAt": "2023-07-12T13:45:00"
+                },
+                {
+                    "id": 9,
+                    "type": "call",
+                    "url": "",
+                    "user": {
+                        "id": 1,
+                        "firstName": "Gerardo",
+                        "lastName": "Moyano",
+                        "role": {
+                            "id": 1,
+                            "name": "Admin"
+                        }
+                    },
+                    "description": "Direct Call made to +52 55 22126164\nCall Duration: 2 min, 30 sec.",
+                    "createdAt": "2023-07-12T13:45:00"
+                },
+                {
+                    "id": 10,
+                    "type": "initial_contact",
+                    "url": "https://www.example.com",
+                    "user": {
+                        "id": 1,
+                        "firstName": "Gerardo",
+                        "lastName": "Moyano",
+                        "role": {
+                            "id": 1,
+                            "name": "Admin"
+                        }
+                    },
+                    "description": "Welcome email sent.",
+                    "createdAt": "2023-06-11T13:45:00"
+                }
+            ],
+            "usersCareers": [
+                {
+                    "id": 1,
+                    "career": {
+                        "id": 1,
+                        "career_id": "0398P",
+                        "name": "Software Engineering",
+                        "career_type": {
+                            "id": 1,
+                            "name": "Graduate"
+                        },
+                        "career_modalities": [
+                            {
+                                "id": 1,
+                                "name": "On-Campus"
+                            },
+                            {
+                                "id": 2,
+                                "name": "Remote"
+                            }
+                        ]
+                    },
+                    "modality_id": 1,
+                    "status": "Enrollment"
+                },
+                {
+                    "id": 2,
+                    "career": {
+                        "id": 2,
+                        "career_id": "0399Q",
+                        "name": "Medical Assistant",
+                        "career_type": {
+                            "id": 1,
+                            "name": "Graduate"
+                        },
+                        "career_modalities": [
+                            {
+                                "id": 1,
+                                "name": "On-Campus"
+                            }
+                        ]
+                    },
+                    "modality_id": 1,
+                    "status": "Enrollment"
+                }
+            ]
+        }
+    ]
+}

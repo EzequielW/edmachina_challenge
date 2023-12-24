@@ -60,7 +60,10 @@ module.exports = configure(function (/* ctx */) {
         node: 'node16'
       },
 
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      vueRouterMode: 'history', // available values: 'hash', 'history'
+      env: {
+        SERVER_URL: process.env.VUE_APP_SERVER_URL ? process.env.VUE_APP_SERVER_URL : 'http://localhost:9001',
+      },
       // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
@@ -78,6 +81,20 @@ module.exports = configure(function (/* ctx */) {
 
       // extendViteConf (viteConf) {},
       // viteVuePluginOptions: {},
+
+      devServer: {
+        headers: {
+          'Access-Control-Allow-Origin': '*'
+        },
+        https: false,
+        port: 8080,
+        open: true,
+        watchOptions: {
+          ignored: '**/node_modules',
+          poll: 1000
+        },
+        public: 'localhost'
+      },
 
       vitePlugins: [
         ['@intlify/vite-plugin-vue-i18n', {

@@ -146,7 +146,6 @@ export default defineComponent({
         const miniState = ref(true);
 
         const routeName = computed(() => {
-            console.log('route.name', route);
             return route.name;
         });
 

@@ -80,6 +80,14 @@ input {
     left: 8px !important;
 }
 
+.q-timeline__entry--no-icon .q-timeline__dot  {
+    left: 8px !important;
+}
+
+.q-timeline__entry--no-icon .q-timeline__dot:before  {
+    top: calc(50% - 0.5rem - 4px);
+}
+
 .q-timeline--dense--right .q-timeline__dot:after {
     top: 0;
 }

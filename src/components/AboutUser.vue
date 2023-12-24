@@ -11,33 +11,36 @@
             <q-card-section class="column text-body2 text-weight-bold">
                 <div class="column">
                     <div>First Name:</div>
-                    <div>Danielle</div>
+                    <div>{{ userAbout?.firstName }}</div>
                 </div>
 
                 <div class="column">
                     <div>Last Name:</div>
-                    <div>Munchen Schollengberg</div>
+                    <div>{{ userAbout?.lastName }}</div>
                 </div>
 
                 <div class="column">
                     <div>Email:</div>
-                    <div>danielle_munchen@gmail.com</div>
+                    <div>{{ userAbout?.email }}</div>
                     <q-separator />
                 </div>
 
                 <div class="column">
                     <div>Phone number:</div>
-                    <div>+52 5522126164</div>
+                    <div>
+                        +{{ userAbout?.country.phone_code }}
+                        {{ userAbout?.phone }}
+                    </div>
                 </div>
 
                 <div class="column">
                     <div>Country:</div>
-                    <div>México</div>
+                    <div>{{ userAbout?.country.name }}</div>
                 </div>
 
                 <div class="column">
                     <div>Category:</div>
-                    <div>Do Not Contact</div>
+                    <div>{{ userAbout?.category.name }}</div>
                 </div>
             </q-card-section>
         </q-card>
@@ -46,8 +49,15 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { UserAbout } from './models';
 
 export default defineComponent({
+    props: {
+        userAbout: {
+            type: Object as () => UserAbout,
+            required: true,
+        },
+    },
     setup() {
         console.log('todo aboutuser');
     },

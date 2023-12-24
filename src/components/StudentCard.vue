@@ -6,13 +6,13 @@
             </q-avatar>
             <div class="column q-pl-md text-body2 text-weight-bold">
                 <div class="text-primary text-body1 text-weight-bold">
-                    Danielle Munchen Schollengberg
+                    {{ name }}
                 </div>
                 <div class="row justify-between items-center">
-                    <div>Reg. ID: AYSI32392</div>
+                    <div>Reg. ID: {{ recordId }}</div>
                     <q-icon name="content_copy"></q-icon>
                 </div>
-                <div>Status: Active</div>
+                <div>Status: {{ status === 1 ? 'Active' : 'Inactive' }}</div>
             </div>
         </q-card-section>
 
@@ -31,8 +31,19 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    setup() {
-        console.log('todo studentcard');
+    props: {
+        name: {
+            type: String,
+            required: true,
+        },
+        recordId: {
+            type: String,
+            required: true,
+        },
+        status: {
+            type: Number,
+            required: true,
+        },
     },
 });
 </script>

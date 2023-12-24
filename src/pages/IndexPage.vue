@@ -3,10 +3,14 @@
         <div class="col-3 q-py-md q-pl-md">
             <q-scroll-area style="height: 1600px; width: 100%" :visible="true">
                 <div class="q-pb-sm">
-                    <StudentCard />
+                    <StudentCard
+                        :name="user ? user.firstName + ' ' + user.lastName : ''"
+                        :recordId="user ? user.record_id : ''"
+                        :status="user ? user.status : 0"
+                    />
                 </div>
                 <draggable
-                    v-model="todos"
+                    v-model="draggableComponents"
                     class="q-gutter-sm"
                     group="people"
                     item-key="id"
@@ -14,7 +18,10 @@
                     animation="150"
                 >
                     <template #item="{ element }">
-                        <component :is="element.component"></component>
+                        <component
+                            :is="element.component"
+                            :userAbout="userAbout"
+                        />
                     </template>
                 </draggable>
             </q-scroll-area>
@@ -23,7 +30,7 @@
             <div class="row justify-between q-px-md">
                 <q-breadcrumbs class="text-weight-bold">
                     <q-breadcrumbs-el label="Record Details" />
-                    <q-breadcrumbs-el label="AYSI32392" />
+                    <q-breadcrumbs-el :label="user ? user.record_id : ''" />
                 </q-breadcrumbs>
                 <q-btn flat round color="secondary" icon="app_registration" />
             </div>
@@ -51,8 +58,70 @@
                         style="flex-wrap: nowrap; gap: 1.5rem"
                     >
                         <StatsCard
-                            v-for="(_, index) in [1, 2, 3, 4, 5]"
-                            :key="index"
+                            :icon="'today'"
+                            :title="'Record Age'"
+                            :stat="
+                                user
+                                    ? formatTimeSince(user.createdAt).replace(
+                                          ' ago',
+                                          ''
+                                      )
+                                    : ''
+                            "
+                            :subtitleLeft="'Created on'"
+                            :subtitleRight="
+                                user ? formatMonthAndYear(user.createdAt) : ''
+                            "
+                        />
+                        <StatsCard
+                            :icon="'check_circle'"
+                            :title="'Status'"
+                            :stat="
+                                user
+                                    ? user.status
+                                        ? 'Active'
+                                        : 'Inactive'
+                                    : 'Inactive'
+                            "
+                            :subtitleLeft="'Updated'"
+                            :subtitleRight="
+                                user ? formatMonthAndYear(user.updatedAt) : ''
+                            "
+                        />
+                        <StatsCard
+                            :icon="'location_on'"
+                            :title="'Country'"
+                            :stat="user ? user.country.name : ''"
+                            :subtitleLeft="'State'"
+                            :subtitleRight="user ? user.state.name : ''"
+                        />
+                        <StatsCard
+                            :icon="'contact_page'"
+                            :title="'Last Contact'"
+                            :stat="
+                                user ? formatTimeSince(user.lastContact) : ''
+                            "
+                            :subtitleLeft="
+                                user ? formatMonthAndYear(user.lastContact) : ''
+                            "
+                            :subtitleRight="
+                                user ? formatTime(user.lastContact) : ''
+                            "
+                        />
+                        <StatsCard
+                            :icon="'show_chart'"
+                            :title="'Last Activity'"
+                            :stat="
+                                user ? formatTimeSince(user.lastActivity) : ''
+                            "
+                            :subtitleLeft="
+                                user
+                                    ? formatMonthAndYear(user.lastActivity)
+                                    : ''
+                            "
+                            :subtitleRight="
+                                user ? formatTime(user.lastActivity) : ''
+                            "
                         />
                     </div>
 
@@ -84,7 +153,9 @@
                         animated
                     >
                         <q-tab-panel name="activity">
-                            <UserActivity />
+                            <UserActivity
+                                :userActivities="user ? user.activities : []"
+                            />
                         </q-tab-panel>
                         <q-tab-panel name="emails">
                             <div class="text-h6">Emails</div>
@@ -110,9 +181,11 @@
 </template>
 
 <script lang="ts">
-import { ComponentInstance } from 'components/models';
-import { defineComponent, ref, shallowRef } from 'vue';
+import { ComponentInstance, FullUser, UserAbout } from 'components/models';
+import { defineComponent, onMounted, ref, shallowRef } from 'vue';
+import { api } from 'src/boot/axios';
 import draggable from 'vuedraggable';
+import moment from 'moment';
 
 import UserActivity from 'src/components/UserActivity.vue';
 import StudentCard from 'src/components/StudentCard.vue';
@@ -133,7 +206,11 @@ export default defineComponent({
         draggable,
     },
     setup() {
-        const todos = shallowRef<ComponentInstance[]>([
+        const userId = 3;
+        const user = ref<FullUser>();
+        const userAbout = ref<UserAbout>();
+
+        const draggableComponents = shallowRef<ComponentInstance[]>([
             {
                 id: 1,
                 component: AboutStudent,
@@ -150,7 +227,53 @@ export default defineComponent({
         const selectedTab = ref<string>('overview');
         const selectedSubtab = ref<string>('activity');
 
-        return { todos, selectedTab, selectedSubtab };
+        const getUser = async () => {
+            try {
+                const response = await api.get(`/users/${userId}`);
+
+                user.value = response.data;
+
+                if (user.value) {
+                    userAbout.value = {
+                        firstName: user.value.firstName,
+                        lastName: user.value.lastName,
+                        email: user.value.email,
+                        phone: user.value.phone,
+                        category: user.value.category,
+                        country: user.value.country,
+                    };
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        const formatMonthAndYear = (date: string) => {
+            return moment(date).format('MMM D, YYYY');
+        };
+
+        const formatTimeSince = (date: string) => {
+            return moment(date).startOf('day').fromNow();
+        };
+
+        const formatTime = (date: string) => {
+            return moment(date).format('h:mma');
+        };
+
+        onMounted(() => {
+            getUser();
+        });
+
+        return {
+            draggableComponents,
+            selectedTab,
+            selectedSubtab,
+            user,
+            userAbout,
+            formatMonthAndYear,
+            formatTimeSince,
+            formatTime,
+        };
     },
 });
 </script>
