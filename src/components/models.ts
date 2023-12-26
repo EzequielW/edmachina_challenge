@@ -8,7 +8,7 @@ export interface ComponentInstance {
 export interface Country {
   id: number,
   name: string,
-  phone_code: number
+  phoneCode: number
 }
 
 export interface State {
@@ -38,16 +38,16 @@ export interface CareerModality {
 
 export interface Career {
   id: number,
-  career_id: string,
+  careerId: string,
   name: string,
-  career_type: CareerType,
-  career_modalities: CareerModality[]
+  careerType: CareerType,
+  careerModalities: CareerModality[]
 }
 
 export interface UsersCareers {
   id: number,
   status: string,
-  modality_id: number,
+  modality: CareerModality,
   career: Career
 }
 
@@ -69,7 +69,7 @@ export interface UserActivity {
 
 export interface FullUser {
   id: number,
-  record_id: string,
+  recordId: string,
   status: number,
   firstName: string,
   lastName: string,

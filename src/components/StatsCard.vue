@@ -56,8 +56,5 @@ export default defineComponent({
             required: true,
         },
     },
-    setup() {
-        console.log('todo statscard');
-    },
 });
 </script>

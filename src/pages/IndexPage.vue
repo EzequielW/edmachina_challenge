@@ -5,7 +5,7 @@
                 <div class="q-pb-sm">
                     <StudentCard
                         :name="user ? user.firstName + ' ' + user.lastName : ''"
-                        :recordId="user ? user.record_id : ''"
+                        :recordId="user ? user.recordId : ''"
                         :status="user ? user.status : 0"
                     />
                 </div>
@@ -21,6 +21,8 @@
                         <component
                             :is="element.component"
                             :userAbout="userAbout"
+                            :usersCareers="user ? user.usersCareers : []"
+                            :studentId="user ? user.recordId : ''"
                         />
                     </template>
                 </draggable>
@@ -30,7 +32,7 @@
             <div class="row justify-between q-px-md">
                 <q-breadcrumbs class="text-weight-bold">
                     <q-breadcrumbs-el label="Record Details" />
-                    <q-breadcrumbs-el :label="user ? user.record_id : ''" />
+                    <q-breadcrumbs-el :label="user ? user.recordId : ''" />
                 </q-breadcrumbs>
                 <q-btn flat round color="secondary" icon="app_registration" />
             </div>

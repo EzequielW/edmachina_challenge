@@ -125,7 +125,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { UserActivity } from './models';
+import { User, UserActivity } from './models';
 import { computed } from 'vue';
 import moment from 'moment';
 
@@ -146,6 +146,18 @@ export default defineComponent({
 
             props.userActivities.forEach((activity) => {
                 const monthKey = activity.createdAt.slice(0, 7);
+                const activityYear = activity.createdAt.slice(0, 4);
+
+                if (
+                    selectedUser.value &&
+                    activity.user.id !== selectedUser.value.id
+                ) {
+                    return;
+                }
+
+                if (selectedYear.value && activityYear !== selectedYear.value) {
+                    return;
+                }
 
                 if (!(monthKey in months)) {
                     months[monthKey] = [];
@@ -156,19 +168,31 @@ export default defineComponent({
             return months;
         });
 
-        const yearList = ref(['2023', '2022']);
-        const userList = ref([
-            {
-                id: 1,
-                firstName: 'Gerardo',
-                lastName: 'Moyano',
-            },
-            {
-                id: 2,
-                firstName: 'Jean',
-                lastName: 'Charleton',
-            },
-        ]);
+        const userList = computed(() => {
+            const users: User[] = [];
+
+            props.userActivities.forEach((activity) => {
+                if (!users.some((user) => user.id === activity.user.id)) {
+                    users.push(activity.user);
+                }
+            });
+
+            return users;
+        });
+
+        const yearList = computed(() => {
+            const years: string[] = [];
+
+            props.userActivities.forEach((activity) => {
+                const activityYear = activity.createdAt.slice(0, 4);
+
+                if (!years.some((year) => year === activityYear)) {
+                    years.push(activityYear);
+                }
+            });
+
+            return years;
+        });
 
         const getIcon = (type: string) => {
             switch (type) {

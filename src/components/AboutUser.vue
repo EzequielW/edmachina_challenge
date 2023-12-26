@@ -28,7 +28,7 @@
                 <div class="column">
                     <div>Phone number:</div>
                     <div>
-                        +{{ userAbout?.country.phone_code }}
+                        +{{ userAbout?.country.phoneCode }}
                         {{ userAbout?.phone }}
                     </div>
                 </div>
@@ -57,9 +57,6 @@ export default defineComponent({
             type: Object as () => UserAbout,
             required: true,
         },
-    },
-    setup() {
-        console.log('todo aboutuser');
     },
 });
 </script>

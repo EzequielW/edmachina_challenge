@@ -7,7 +7,7 @@
                 "id": 3,
                 "name": "student"
             },
-            "record_id": "AYSI32392",
+            "recordId": "AYSI32392",
             "firstName": "Danielle",
             "lastName": "Munchen Schollengberg",
             "email": "danielle_munchen@gmail.com",
@@ -15,7 +15,7 @@
             "country": {
                 "id": 1,
                 "name": "México",
-                "phone_code": "52"
+                "phoneCode": "52"
             },
             "state": {
                 "id": 1,
@@ -196,13 +196,13 @@
                     "id": 1,
                     "career": {
                         "id": 1,
-                        "career_id": "0398P",
+                        "careerId": "0398P",
                         "name": "Software Engineering",
-                        "career_type": {
+                        "careerType": {
                             "id": 1,
                             "name": "Graduate"
                         },
-                        "career_modalities": [
+                        "careerModalities": [
                             {
                                 "id": 1,
                                 "name": "On-Campus"
@@ -213,27 +213,33 @@
                             }
                         ]
                     },
-                    "modality_id": 1,
+                    "modality": {
+                        "id": 2,
+                        "name": "Remote"
+                    },
                     "status": "Enrollment"
                 },
                 {
                     "id": 2,
                     "career": {
                         "id": 2,
-                        "career_id": "0399Q",
+                        "careerId": "0399Q",
                         "name": "Medical Assistant",
-                        "career_type": {
+                        "careerType": {
                             "id": 1,
                             "name": "Graduate"
                         },
-                        "career_modalities": [
+                        "careerModalities": [
                             {
                                 "id": 1,
                                 "name": "On-Campus"
                             }
                         ]
                     },
-                    "modality_id": 1,
+                    "modality": {
+                        "id": 1,
+                        "name": "On-Campus"
+                    },
                     "status": "Enrollment"
                 }
             ]

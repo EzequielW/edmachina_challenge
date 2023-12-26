@@ -15,33 +15,46 @@
                         outlined
                         dense
                         v-model="selectedCareer"
-                        :options="careerList"
+                        :options="usersCareers"
+                        :option-label="(item) => item.career.name"
                     />
                 </div>
 
                 <div class="column">
                     <div>Career ID:</div>
-                    <div>0398P</div>
+                    <div>
+                        {{
+                            selectedCareer ? selectedCareer.career.careerId : ''
+                        }}
+                    </div>
                 </div>
 
                 <div class="column">
                     <div>Type:</div>
-                    <div>Graduate</div>
+                    <div>
+                        {{
+                            selectedCareer
+                                ? selectedCareer.career.careerType.name
+                                : ''
+                        }}
+                    </div>
                 </div>
 
                 <div class="column">
                     <div>Modality:</div>
-                    <div>On-Campus</div>
+                    <div>
+                        {{ selectedCareer ? selectedCareer.modality.name : '' }}
+                    </div>
                 </div>
 
                 <div class="column">
                     <div>Status:</div>
-                    <div>Enrollment</div>
+                    <div>{{ selectedCareer ? selectedCareer.status : '' }}</div>
                 </div>
 
                 <div class="column">
                     <div>Student ID:</div>
-                    <div>AYSI32392</div>
+                    <div>{{ studentId }}</div>
                 </div>
 
                 <div class="column">
@@ -54,29 +67,34 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, watch } from 'vue';
+import { UsersCareers } from './models';
 
 export default defineComponent({
-    setup() {
-        const selectedCareer = ref({
-            id: 1,
-            label: 'Software Engineering',
-        });
+    props: {
+        usersCareers: {
+            type: Object as () => UsersCareers[],
+            required: true,
+        },
+        studentId: {
+            type: String,
+            required: true,
+        },
+    },
+    setup(props) {
+        const selectedCareer = ref();
 
-        const careerList = ref([
-            {
-                id: 1,
-                label: 'Software Engineering',
-            },
-            {
-                id: 2,
-                label: 'Medical Assistant',
-            },
-        ]);
+        watch(
+            () => props.usersCareers,
+            () => {
+                if (props.usersCareers.length > 0) {
+                    selectedCareer.value = props.usersCareers[0];
+                }
+            }
+        );
 
         return {
             selectedCareer,
-            careerList,
         };
     },
 });
