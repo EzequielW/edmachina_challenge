@@ -44,12 +44,31 @@
             @mouseout="miniState = true"
             :breakpoint="600"
         >
+            <EssentialLink
+                :report="{
+                    id: 0,
+                    name: 'Dashboard',
+                    icon: 'home',
+                    route: 'https://quasar.dev',
+                    highlight: true,
+                }"
+                :active="routeName === 'dashboard'"
+            />
+            <div
+                class="q-pl-sm q-pt-sm text-caption q-mini-drawer-hide"
+                style="color: #babfc7"
+            >
+                REPORTS
+            </div>
+            <div class="row justify-center q-pt-md q-mini-drawer-only">
+                <q-icon name="more_horiz" />
+            </div>
             <q-list>
                 <EssentialLink
-                    v-for="link in essentialLinks"
-                    :key="link.title"
-                    v-bind="link"
-                    :active="routeName === link.title.toLowerCase()"
+                    v-for="report in reports"
+                    :key="'report_' + report.id"
+                    :report="report"
+                    :active="routeName === report.name.toLowerCase()"
                 />
             </q-list>
         </q-drawer>
@@ -69,71 +88,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, onMounted, ref } from 'vue';
 import EssentialLink from 'components/EssentialLink.vue';
 import { useRoute } from 'vue-router';
-
-const linksList = [
-    {
-        title: 'Dashboard',
-        icon: 'home',
-        link: 'https://quasar.dev',
-    },
-    {
-        title: 'Smart Enroller',
-        icon: 'add_box',
-        link: 'https://github.com/quasarframework',
-    },
-    {
-        title: 'Dropout Shield',
-        icon: 'outbound',
-        link: 'https://chat.quasar.dev',
-    },
-    {
-        title: 'Retention Partner',
-        icon: 'sync',
-        link: 'https://forum.quasar.dev',
-    },
-    {
-        title: 'Risk Detector',
-        icon: 'analytics',
-        link: 'https://twitter.quasar.dev',
-        reports: [
-            {
-                id: 1,
-                name: 'My Reports',
-            },
-            {
-                id: 2,
-                name: 'My Reports',
-            },
-            {
-                id: 3,
-                name: 'My Reports',
-            },
-        ],
-    },
-    {
-        title: 'Academic Offer',
-        icon: 'school',
-        link: 'https://facebook.quasar.dev',
-    },
-    {
-        title: 'My Reports',
-        icon: 'equalizer',
-        link: 'https://awesome.quasar.dev',
-    },
-    {
-        title: 'Custom Reports',
-        icon: 'add_chart',
-        link: 'https://awesome.quasar.dev',
-    },
-    {
-        title: 'Workflows',
-        icon: 'account_tree',
-        link: 'https://awesome.quasar.dev',
-    },
-];
+import { Report } from 'src/components/models';
+import { api } from 'src/boot/axios';
 
 export default defineComponent({
     name: 'MainLayout',
@@ -144,13 +103,27 @@ export default defineComponent({
         const route = useRoute();
         const leftDrawerOpen = ref(false);
         const miniState = ref(true);
+        const reports = ref<Report[]>([]);
 
         const routeName = computed(() => {
             return route.name;
         });
 
+        const getReports = async () => {
+            try {
+                const response = await api.get('/reports');
+                reports.value = response.data;
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        onMounted(() => {
+            getReports();
+        });
+
         return {
-            essentialLinks: linksList,
+            reports,
             leftDrawerOpen,
             toggleLeftDrawer() {
                 leftDrawerOpen.value = !leftDrawerOpen.value;

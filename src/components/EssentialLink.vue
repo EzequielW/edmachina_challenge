@@ -4,20 +4,47 @@
             <q-btn
                 dense
                 class="drawer-btn text-secondary"
-                :icon="icon"
+                :icon="report.icon"
                 unelevated
                 :color="active ? 'primary' : undefined"
             />
         </q-item-section>
 
         <q-item-section class="q-mini-drawer-hide">
+            <q-expansion-item
+                v-if="report.subreports && report.subreports.length > 0"
+                class="drawer-btn text-secondary text-body1 ellipsis"
+                :class="{
+                    'text-weight-bold': report.highlight,
+                    'text-weight-regular': !report.highlight,
+                }"
+                v-model="expanded"
+                :icon="report.icon"
+                :label="report.name"
+                :content-inset-level="1"
+            >
+                <ul class="text-weight-regular">
+                    <li
+                        v-for="subreport in report.subreports"
+                        :key="'subreport_' + subreport.id"
+                    >
+                        {{ subreport.name }}
+                    </li>
+                </ul>
+            </q-expansion-item>
+
             <q-btn
-                class="drawer-btn text-secondary text-body1 text-weight-bold ellipsis"
-                :icon="icon"
+                v-else
+                class="drawer-btn text-secondary text-body1 ellipsis"
+                :class="{
+                    'text-weight-bold': report.highlight,
+                    'text-weight-regular': !report.highlight,
+                }"
+                :icon="report.icon"
                 :align="'left'"
                 unelevated
                 no-caps
-                :label="title"
+                :label="report.name"
                 :color="active ? 'primary' : undefined"
             />
         </q-item-section>
@@ -25,27 +52,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
+
+import { Report } from './models';
 
 export default defineComponent({
     name: 'EssentialLink',
     props: {
-        title: {
-            type: String,
+        report: {
+            type: Object as () => Report,
             required: true,
-        },
-        link: {
-            type: String,
-            default: '#',
-        },
-        icon: {
-            type: String,
-            default: '',
         },
         active: {
             type: Boolean,
             default: false,
         },
+    },
+    setup() {
+        const expanded = ref(false);
+
+        return { expanded };
     },
 });
 </script>
@@ -58,6 +84,7 @@ export default defineComponent({
 
 .q-mini-drawer-hide .q-btn {
     max-width: 230px;
+    height: 42px;
     text-overflow: ellipsis;
     overflow: hidden;
 }
@@ -83,5 +110,19 @@ export default defineComponent({
 
 .q-mini-drawer-hide .drawer-btn .q-btn .q-icon {
     margin-right: 12px;
+}
+
+.drawer-btn .q-expansion-item__container .q-item {
+    height: 42px;
+    min-height: 0;
+    background-color: #fff;
+}
+
+.drawer-btn .q-expansion-item__container .q-item__section--avatar {
+    padding-right: 12px;
+}
+
+.drawer-btn .q-expansion-item__container .q-item__section--avatar .q-icon {
+    font-size: 20px !important;
 }
 </style>

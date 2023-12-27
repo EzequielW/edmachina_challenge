@@ -159,6 +159,15 @@ export default defineComponent({
                     return;
                 }
 
+                if (
+                    searchTerm.value &&
+                    !activity.description
+                        .toLowerCase()
+                        .includes(searchTerm.value.toLowerCase())
+                ) {
+                    return;
+                }
+
                 if (!(monthKey in months)) {
                     months[monthKey] = [];
                 }

@@ -67,6 +67,24 @@ export interface UserActivity {
   createdAt: string
 }
 
+export interface ClassRisk {
+  id: number,
+  name: string,
+  risk?: number,
+  score?: number
+}
+
+export interface StudentRisk {
+  id: number,
+  period: string,
+  status: string,
+  admission: string,
+  school: string,
+  segment?: string,
+  segmentDetails?: string,
+  classesRisk: ClassRisk[]
+}
+
 export interface FullUser {
   id: number,
   recordId: string,
@@ -77,12 +95,11 @@ export interface FullUser {
   phone: string,
   lastContact: string,
   lastActivity: string,
-  activities: UserActivity[],
-  usersCareers: UsersCareers[],
   category: Category,
   country: Country,
   state: State,
   role: Role,
+  studentRisk: StudentRisk,
   createdAt: string,
   updatedAt: string,
 }
@@ -94,4 +111,18 @@ export interface UserAbout {
   phone: string,
   category: Category,
   country: Country,
+}
+
+export interface Subreport {
+  id: number,
+  name: string,
+}
+
+export interface Report {
+  id: number,
+  name: string,
+  icon: string,
+  highlight: boolean,
+  route: string,
+  subreports?: Subreport[]
 }

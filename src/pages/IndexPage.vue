@@ -21,8 +21,9 @@
                         <component
                             :is="element.component"
                             :userAbout="userAbout"
-                            :usersCareers="user ? user.usersCareers : []"
+                            :usersCareers="userCareers"
                             :studentId="user ? user.recordId : ''"
+                            :studentRisk="user ? user.studentRisk : {}"
                         />
                     </template>
                 </draggable>
@@ -155,9 +156,7 @@
                         animated
                     >
                         <q-tab-panel name="activity">
-                            <UserActivity
-                                :userActivities="user ? user.activities : []"
-                            />
+                            <UserActivity :userActivities="activities" />
                         </q-tab-panel>
                         <q-tab-panel name="emails">
                             <div class="text-h6">Emails</div>
@@ -183,7 +182,13 @@
 </template>
 
 <script lang="ts">
-import { ComponentInstance, FullUser, UserAbout } from 'components/models';
+import {
+    ComponentInstance,
+    FullUser,
+    UserAbout,
+    UserActivity as UserActivityType,
+    UsersCareers,
+} from 'components/models';
 import { defineComponent, onMounted, ref, shallowRef } from 'vue';
 import { api } from 'src/boot/axios';
 import draggable from 'vuedraggable';
@@ -211,6 +216,8 @@ export default defineComponent({
         const userId = 3;
         const user = ref<FullUser>();
         const userAbout = ref<UserAbout>();
+        const activities = ref<UserActivityType[]>([]);
+        const userCareers = ref<UsersCareers[]>([]);
 
         const draggableComponents = shallowRef<ComponentInstance[]>([
             {
@@ -250,6 +257,26 @@ export default defineComponent({
             }
         };
 
+        const getActivities = async () => {
+            try {
+                const response = await api.get(`/activities?userId=${userId}`);
+                activities.value = response.data;
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        const getCareers = async () => {
+            try {
+                const response = await api.get(
+                    `/users_careers?userId=${userId}`
+                );
+                userCareers.value = response.data;
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
         const formatMonthAndYear = (date: string) => {
             return moment(date).format('MMM D, YYYY');
         };
@@ -264,6 +291,8 @@ export default defineComponent({
 
         onMounted(() => {
             getUser();
+            getActivities();
+            getCareers();
         });
 
         return {
@@ -272,6 +301,8 @@ export default defineComponent({
             selectedSubtab,
             user,
             userAbout,
+            activities,
+            userCareers,
             formatMonthAndYear,
             formatTimeSince,
             formatTime,

@@ -4,8 +4,8 @@
             <q-avatar size="65px">
                 <img src="https://cdn.quasar.dev/img/avatar.png" />
             </q-avatar>
-            <div class="column q-pl-md text-body2 text-weight-bold">
-                <div class="text-primary text-body1 text-weight-bold">
+            <div class="column q-pl-lg text-subtitle1 text-weight-bold">
+                <div class="text-primary text-h6 text-weight-bold">
                     {{ name }}
                 </div>
                 <div class="row justify-between items-center">
@@ -51,11 +51,16 @@ export default defineComponent({
 <style lang="scss" scoped>
 .q-icon {
     cursor: pointer;
+    font-size: 20px;
 }
 
 .q-avatar img {
     border-width: 3px;
     border-style: solid;
     border-color: $light-green-5;
+}
+
+.q-card__section {
+    flex-wrap: nowrap;
 }
 </style>
