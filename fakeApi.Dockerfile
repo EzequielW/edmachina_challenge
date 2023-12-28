@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:20-alpine
 WORKDIR /home/node/
 COPY ./db.json /home/node/
 COPY ./package.json /home/node/

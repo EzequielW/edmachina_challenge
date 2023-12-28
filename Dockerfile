@@ -1,5 +1,5 @@
 # develop stage
-FROM node:18-alpine as develop-stage
+FROM node:20-alpine as develop-stage
 WORKDIR /home/node/
 ADD . ./
 RUN npm i -g @quasar/cli

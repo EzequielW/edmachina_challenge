@@ -18,3 +18,12 @@ services:
     ports:
       - 9001:9001
     command: npm run fake-server
+  storybook:
+    build: 
+      context: .
+      dockerfile: storybook.Dockerfile
+    links: 
+      - edmachina
+    ports:
+      - 9002:9002
+    command: npm run storybook
