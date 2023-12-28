@@ -1,5 +1,5 @@
 <template>
-    <q-card class="full-width">
+    <q-card>
         <q-card-section>
             <div class="row justify-between">
                 <q-avatar

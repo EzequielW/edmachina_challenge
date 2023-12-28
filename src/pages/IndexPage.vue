@@ -1,35 +1,65 @@
 <template>
     <q-page class="row justify-evenly">
-        <div class="col-3 q-py-md q-pl-md">
-            <q-scroll-area style="height: 1600px; width: 100%" :visible="true">
-                <div class="q-pb-sm">
-                    <StudentCard
-                        :name="user ? user.firstName + ' ' + user.lastName : ''"
-                        :recordId="user ? user.recordId : ''"
-                        :status="user ? user.status : 0"
-                    />
-                </div>
-                <draggable
-                    v-model="draggableComponents"
-                    class="q-gutter-sm"
-                    group="people"
-                    item-key="id"
-                    handle=".handle"
-                    animation="150"
-                >
-                    <template #item="{ element }">
-                        <component
-                            :is="element.component"
-                            :userAbout="userAbout"
-                            :usersCareers="userCareers"
-                            :studentId="user ? user.recordId : ''"
-                            :studentRisk="user ? user.studentRisk : {}"
+        <div
+            class="q-py-md q-pl-md"
+            :class="{
+                'col-3': $q.screen.gt.md,
+                'col-10': $q.screen.lt.lg,
+                'col-12': $q.screen.lt.md,
+            }"
+        >
+            <q-scroll-area
+                class="draggable-scroll-area full-width"
+                :visible="true"
+            >
+                <div class="col">
+                    <div class="q-pb-sm draggable-component">
+                        <StudentCard
+                            :name="
+                                user ? user.firstName + ' ' + user.lastName : ''
+                            "
+                            :recordId="user ? user.recordId : ''"
+                            :status="user ? user.status : 0"
                         />
-                    </template>
-                </draggable>
+                    </div>
+                    <draggable
+                        v-model="draggableComponents"
+                        class="q-gutter-sm q-pb-sm"
+                        group="people"
+                        item-key="id"
+                        handle=".handle"
+                        animation="150"
+                    >
+                        <template #item="{ element }">
+                            <component
+                                class="draggable-component"
+                                :is="element.component"
+                                :userAbout="userAbout"
+                                :usersCareers="userCareers"
+                                :studentId="user ? user.recordId : ''"
+                                :studentRisk="user ? user.studentRisk : {}"
+                            />
+                        </template>
+                    </draggable>
+                    <q-card>
+                        <q-card-section>
+                            <div
+                                class="text-primary-light text-weight-bold text-body2 cursor-pointer"
+                            >
+                                Manage Widgets
+                            </div>
+                        </q-card-section>
+                    </q-card>
+                </div>
             </q-scroll-area>
         </div>
-        <div class="col-9 q-py-md">
+        <div
+            class="q-py-md"
+            :class="{
+                'col-9': $q.screen.gt.md,
+                'col-12': $q.screen.lt.lg,
+            }"
+        >
             <div class="row justify-between q-px-md">
                 <q-breadcrumbs class="text-weight-bold">
                     <q-breadcrumbs-el label="Record Details" />
@@ -58,9 +88,13 @@
                 <q-tab-panel name="overview">
                     <div
                         class="row justify-evenly q-pb-lg q-pt-md"
-                        style="flex-wrap: nowrap; gap: 1.5rem"
+                        :class="{
+                            'no-wrap': $q.screen.gt.md,
+                        }"
+                        style="gap: 1.5rem"
                     >
                         <StatsCard
+                            class="stats-card"
                             :icon="'today'"
                             :title="'Record Age'"
                             :stat="
@@ -77,6 +111,7 @@
                             "
                         />
                         <StatsCard
+                            class="stats-card"
                             :icon="'check_circle'"
                             :title="'Status'"
                             :stat="
@@ -92,6 +127,7 @@
                             "
                         />
                         <StatsCard
+                            class="stats-card"
                             :icon="'location_on'"
                             :title="'Country'"
                             :stat="user ? user.country.name : ''"
@@ -99,6 +135,7 @@
                             :subtitleRight="user ? user.state.name : ''"
                         />
                         <StatsCard
+                            class="stats-card"
                             :icon="'contact_page'"
                             :title="'Last Contact'"
                             :stat="
@@ -112,6 +149,7 @@
                             "
                         />
                         <StatsCard
+                            class="stats-card"
                             :icon="'show_chart'"
                             :title="'Last Activity'"
                             :stat="
@@ -343,6 +381,31 @@ export default defineComponent({
 .overview-tab-panels {
     border-radius: 0 8px 8px 8px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
+}
+
+.draggable-scroll-area {
+    height: 1600px;
+}
+
+.stats-card {
+    width: 100%;
+}
+
+@media (max-width: $breakpoint-md-max) {
+    .draggable-scroll-area {
+        height: 400px;
+    }
+
+    .stats-card {
+        width: auto;
+        min-width: 200px;
+    }
+}
+
+@media (max-width: 800px) {
+    .stats-card {
+        width: 100%;
+    }
 }
 </style>
 

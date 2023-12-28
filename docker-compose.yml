@@ -8,7 +8,7 @@ services:
       - '9000:9000'
     volumes:
       - '.:/home/node/'
-    command: /bin/sh -c "npm install && quasar dev"
+    command: /bin/sh -c "echo 'Installing npm packages...' && npm install && quasar dev"
     environment:
       - VUE_APP_SERVER_URL=http://localhost:9001/
   json-server:
@@ -19,11 +19,12 @@ services:
       - 9001:9001
     command: npm run fake-server
   storybook:
-    build: 
+    build:
       context: .
       dockerfile: storybook.Dockerfile
-    links: 
-      - edmachina
+      target: 'develop-stage'
     ports:
-      - 9002:9002
-    command: npm run storybook
+      - '9002:9002'
+    command: /bin/sh -c "echo 'Installing npm packages...' && npm install && npm run storybook"
+    environment:
+      - VUE_APP_SERVER_URL=http://localhost:9001/

@@ -38,7 +38,7 @@
             bordered
             :width="250"
             :mini-width="65"
-            :mini="miniState"
+            :mini="$q.screen.xs ? false : miniState"
             :mini-to-overlay="true"
             @mouseover="miniState = false"
             @mouseout="miniState = true"
