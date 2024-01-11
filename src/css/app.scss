@@ -1,25 +1,113 @@
+@font-face {
+    font-family: Montserrat;
+    src: url(./fonts/Montserrat.ttf);
+}
+
+body {
+    font-family: 'Montserrat';
+    color: $secondary;
+    line-height: normal;
+}
+
 // Custom quasar components
+
+.text-subtitle1 {
+    font-size: 18px;
+    line-height: normal;
+    letter-spacing: unset;
+    font-feature-settings: 'clig' off, 'liga' off;
+}
+
+.text-subtitle2 {
+    font-size: 16px;
+    line-height: normal;
+    letter-spacing: unset;
+    font-feature-settings: 'clig' off, 'liga' off;
+}
+
+.text-body1 {
+    font-size: 14px;
+    line-height: normal;
+    letter-spacing: unset;
+    font-feature-settings: 'clig' off, 'liga' off;
+}
+
+.text-body2 {
+    font-size: 12px;
+    line-height: normal;
+    letter-spacing: unset;
+    font-feature-settings: 'clig' off, 'liga' off;
+}
 
 .text-primary-light {
     color: $primary-light !important;
 }
 .bg-primary-light {
     background: $primary-light !important;
-}  
-
-body {
-    color: $secondary;
 }
 
+.q-gutter-sm > * {
+    margin-top: 10px;
+}
+
+// Layout
+.q-layout__shadow:after {
+    box-shadow: none;
+}
+
+.q-toolbar__title {
+    display: flex;
+    align-items: center;
+}
+
+// Separator
 .q-separator {
-    height: 2px;
+    height: 1px;
 }
 
+// Card
 .q-card {
     border-radius: 8px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
 }
 
+// Tabs
+.main-tabs .q-tab {
+    padding: 0 20px;
+}
+
+.main-tabs .q-tab .q-tab__label {
+    font-size: 18px;
+    line-height: 21px;
+    font-weight: 700;
+}
+
+.main-tabs .q-tab[aria-selected="false"] .q-tab__label {
+    opacity: 0.5;
+}
+
+.overview-tabs .q-tab__label {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+// Scrollbar area
+.q-scrollarea .q-scrollarea__bar {
+    background-color: #D8D6DE;
+    width: 10px;
+    opacity: 1;
+    border-radius: 40px;
+}
+
+.q-scrollarea .q-scrollarea__thumb {
+    background-color: $secondary;
+    right: 1px;
+    width: 8px;
+    opacity: 1;
+    border-radius: 40px;
+}
+
+// Expansion item
 .q-expansion-item {
     border-radius: 8px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
@@ -43,9 +131,11 @@ body {
     border-radius: 8px;
 }
 
+// Select
 .q-select span,
 input {
     font-weight: map-get($text-weights, 'bold');
+    font-size: 12px;
     color: $secondary;
 }
 
@@ -57,7 +147,7 @@ input {
     font-weight: map-get($text-weights, 'bold');
 }
 
-// Custom style for quasar timeline component
+// Timeline component
 .q-timeline li:nth-child(1) .q-timeline__dot:after {
     top: 50%;
 }  
@@ -69,32 +159,39 @@ input {
 
 .q-timeline--dense--right .q-timeline__dot:before {
     top: calc(50% - 0.5rem - 12.5px);
+    z-index: 99;
+    border: 2px solid #DDD;
+    width: 25px;
+    height: 25px;
 }
 
 .q-timeline--dense--right .q-timeline__dot {
     top: 0;
     left: 0 !important;
-}
-
-.timeline__month-title .q-timeline__dot {
-    left: 8px !important;
-}
-
-.q-timeline__entry--no-icon .q-timeline__dot  {
-    left: 8px !important;
+    width: 25px;
 }
 
 .q-timeline__entry--no-icon .q-timeline__dot:before  {
     top: calc(50% - 0.5rem - 4px);
+    border: 1px solid #DDD;
+    width: 8px;
+    height: 8px;
+    left: 8px;
 }
 
 .q-timeline--dense--right .q-timeline__dot:after {
     top: 0;
+    width: 2px;
+    opacity: 1;
+    background-color: #DDD;
+    z-index: 98;
+    left: 11px;
 }
 
 .q-timeline--dense--right .q-timeline__dot i {
-    top: calc(50% - 0.5rem - 15.5px);
+    top: calc(50% - 8px - 19px);
     z-index: 100;
+    font-size: 12px;
 }
 
 .timeline__month-title .q-timeline__dot, .q-timeline__dot:after {

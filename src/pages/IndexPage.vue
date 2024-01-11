@@ -9,8 +9,10 @@
             }"
         >
             <q-scroll-area
+                ref="scrollArea"
                 class="draggable-scroll-area full-width"
                 :visible="true"
+                :style="{ 'padding-right': addScrollPadding ? '14px' : '0px' }"
             >
                 <div class="col">
                     <div class="q-pb-sm draggable-component">
@@ -60,7 +62,7 @@
                 'col-12': $q.screen.lt.lg,
             }"
         >
-            <div class="row justify-between q-px-md">
+            <div class="row justify-between items-center q-px-md">
                 <q-breadcrumbs class="text-weight-bold">
                     <q-breadcrumbs-el label="Record Details" />
                     <q-breadcrumbs-el :label="user ? user.recordId : ''" />
@@ -69,7 +71,7 @@
             </div>
 
             <q-tabs
-                class="q-px-md"
+                class="q-px-md main-tabs"
                 v-model="selectedTab"
                 indicator-color="primary"
             >
@@ -83,15 +85,15 @@
             <q-tab-panels
                 v-model="selectedTab"
                 animated
-                class="bg-transparent q-pa-md"
+                class="bg-transparent q-px-md q-pb-md"
             >
                 <q-tab-panel name="overview">
                     <div
-                        class="row justify-evenly q-pb-lg q-pt-md"
+                        class="row justify-evenly stats-card-container"
                         :class="{
                             'no-wrap': $q.screen.gt.md,
                         }"
-                        style="gap: 1.5rem"
+                        style="gap: 20px"
                     >
                         <StatsCard
                             class="stats-card"
@@ -227,7 +229,7 @@ import {
     UserActivity as UserActivityType,
     UsersCareers,
 } from 'components/models';
-import { defineComponent, onMounted, ref, shallowRef } from 'vue';
+import { computed, defineComponent, onMounted, ref, shallowRef } from 'vue';
 import { api } from 'src/boot/axios';
 import draggable from 'vuedraggable';
 import moment from 'moment';
@@ -273,6 +275,22 @@ export default defineComponent({
         ]);
         const selectedTab = ref<string>('overview');
         const selectedSubtab = ref<string>('activity');
+        const scrollArea = ref();
+
+        const addScrollPadding = computed(() => {
+            let addPadding = false;
+
+            if (scrollArea.value) {
+                const scrollData = scrollArea.value.getScroll();
+                if (
+                    scrollData.verticalContainerSize < scrollData.verticalSize
+                ) {
+                    addPadding = true;
+                }
+            }
+
+            return addPadding;
+        });
 
         const getUser = async () => {
             try {
@@ -341,6 +359,8 @@ export default defineComponent({
             userAbout,
             activities,
             userCareers,
+            scrollArea,
+            addScrollPadding,
             formatMonthAndYear,
             formatTimeSince,
             formatTime,
@@ -375,12 +395,13 @@ export default defineComponent({
     background-color: transparent;
     width: fit-content;
     border-radius: 8px 8px 0 0;
+    margin-top: 10px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
 }
 
 .overview-tab-panels {
     border-radius: 0 8px 8px 8px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
+    // box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
 }
 
 .draggable-scroll-area {
@@ -389,6 +410,14 @@ export default defineComponent({
 
 .stats-card {
     width: 100%;
+}
+
+.stats-card-container {
+    padding: 20px 0;
+}
+
+.q-breadcrumbs__el {
+    color: $primary-light;
 }
 
 @media (max-width: $breakpoint-md-max) {

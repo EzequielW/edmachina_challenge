@@ -12,7 +12,12 @@
                     v-if="$q.screen.xs"
                 />
 
-                <q-toolbar-title> Ed l\\achina </q-toolbar-title>
+                <q-toolbar-title>
+                    <q-img
+                        src="/icons/edmachina-logo.svg"
+                        style="width: 146px; height: 22px"
+                    />
+                </q-toolbar-title>
 
                 <div class="row items-center">
                     <q-btn flat dense round icon="language" />
@@ -21,8 +26,10 @@
                         <q-badge color="red" floating>4</q-badge>
                     </q-btn>
                     <div class="column items-end q-px-md">
-                        <div class="text-body2">Hellen Smith</div>
-                        <div class="text-caption">Admin</div>
+                        <div class="text-body1 text-weight-bold">
+                            Hellen Smith
+                        </div>
+                        <div class="text-body2 text-weight-bold">Admin</div>
                     </div>
                     <q-avatar size="38px">
                         <img src="https://cdn.quasar.dev/img/avatar.png" />
@@ -35,7 +42,6 @@
         <q-drawer
             v-model="leftDrawerOpen"
             show-if-above
-            bordered
             :width="250"
             :mini-width="65"
             :mini="$q.screen.xs ? false : miniState"
@@ -55,13 +61,23 @@
                 :active="routeName === 'dashboard'"
             />
             <div
-                class="q-pl-sm q-pt-sm text-caption q-mini-drawer-hide"
-                style="color: #babfc7"
+                class="text-body2 q-mini-drawer-hide"
+                style="
+                    color: #babfc7;
+                    margin-top: 20px;
+                    margin-bottom: 10px;
+                    padding-left: 10px;
+                    line-height: 18px;
+                    height: 18px;
+                "
             >
                 REPORTS
             </div>
-            <div class="row justify-center q-pt-md q-mini-drawer-only">
-                <q-icon name="more_horiz" />
+            <div
+                class="row justify-center q-mini-drawer-only"
+                style="margin-top: 30px; line-height: 18px; height: 18px"
+            >
+                <q-icon color="secondary" name="more_horiz" size="18px" />
             </div>
             <q-list>
                 <EssentialLink
@@ -168,5 +184,10 @@ export default defineComponent({
 .q-footer {
     background-color: #eee;
     color: #888;
+}
+
+.q-toolbar {
+    height: 63px;
+    padding: 0 22px;
 }
 </style>

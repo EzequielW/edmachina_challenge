@@ -16,34 +16,42 @@
                 class="drawer-btn text-secondary text-body1 ellipsis"
                 :class="{
                     'text-weight-bold': report.highlight,
-                    'text-weight-regular': !report.highlight,
+                    'text-weight-medium': !report.highlight,
+                    'drawer-btn__shadow': !expanded,
                 }"
                 v-model="expanded"
                 :icon="report.icon"
                 :label="report.name"
-                :content-inset-level="1"
+                :header-class="{
+                    'bg-primary': expanded,
+                    'text-white': expanded,
+                }"
+                :expand-icon-class="{ 'text-white': expanded }"
             >
-                <ul class="text-weight-regular">
+                <ul class="text-weight-medium">
                     <li
                         v-for="subreport in report.subreports"
                         :key="'subreport_' + subreport.id"
                     >
-                        {{ subreport.name }}
+                        <q-icon name="circle" size="10px" />
+                        <span>{{ subreport.name }}</span>
                     </li>
                 </ul>
             </q-expansion-item>
 
             <q-btn
+                dense
                 v-else
                 class="drawer-btn text-secondary text-body1 ellipsis"
                 :class="{
                     'text-weight-bold': report.highlight,
-                    'text-weight-regular': !report.highlight,
+                    'text-weight-medium': !report.highlight,
                 }"
                 :icon="report.icon"
                 :align="'left'"
                 unelevated
                 no-caps
+                style="padding-left: 0; padding-right: 10.5px"
                 :label="report.name"
                 :color="active ? 'primary' : undefined"
             />
@@ -97,25 +105,57 @@ export default defineComponent({
 .q-item {
     padding: 5px 10px;
 }
+
+.q-item__section--main {
+    flex-wrap: nowrap;
+}
+
+ul {
+    margin-top: 0;
+    padding-inline-start: 30px;
+}
+
+ul li {
+    display: flex;
+    align-items: center;
+    height: 42px;
+    line-height: 24px;
+}
+
+ul li .q-icon {
+    width: 10px !important;
+    margin-right: 10px;
+}
+
+.q-expansion-item {
+    max-width: 230px;
+    box-shadow: unset;
+}
+
+.drawer-btn__shadow {
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
+}
 </style>
 
 <style lang="scss">
 .drawer-btn .q-icon {
-    font-size: 20px;
+    font-size: 24px;
 }
 
 .drawer-btn .q-btn__content {
     flex-wrap: nowrap;
 }
 
-.q-mini-drawer-hide .drawer-btn .q-btn .q-icon {
-    margin-right: 12px;
+.q-mini-drawer-hide .drawer-btn .q-icon {
+    width: 45px;
 }
 
 .drawer-btn .q-expansion-item__container .q-item {
     height: 42px;
     min-height: 0;
     background-color: #fff;
+    border-radius: 8px;
+    padding: 0px;
 }
 
 .drawer-btn .q-expansion-item__container .q-item__section--avatar {
@@ -123,6 +163,7 @@ export default defineComponent({
 }
 
 .drawer-btn .q-expansion-item__container .q-item__section--avatar .q-icon {
-    font-size: 20px !important;
+    font-size: 24px !important;
+    cursor: unset;
 }
 </style>

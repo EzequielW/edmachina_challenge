@@ -2,7 +2,7 @@
     <q-expansion-item
         expand-icon-toggle
         icon="drag_indicator"
-        class="text-body1 text-weight-bolder"
+        class="text-body1 text-weight-bold"
         label="Career Details"
         header-class="handle"
         default-opened
@@ -10,7 +10,7 @@
         <q-card>
             <q-card-section class="column text-body2 text-weight-bold">
                 <div class="column">
-                    <div>Career Name:</div>
+                    <div style="padding-bottom: 5px">Career Name:</div>
                     <q-select
                         outlined
                         dense
@@ -102,6 +102,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .q-card__section {
-    gap: 1rem;
+    gap: 10px;
 }
 </style>

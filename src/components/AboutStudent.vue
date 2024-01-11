@@ -2,7 +2,7 @@
     <q-expansion-item
         expand-icon-toggle
         icon="drag_indicator"
-        class="text-body1 text-weight-bolder"
+        class="text-body1 text-weight-bold"
         label="Sobre el Estudiante"
         header-class="handle"
         default-opened
@@ -30,11 +30,11 @@
                     }}
                 </div>
 
-                <div class="column justify-start q-pt-sm">
+                <div class="column justify-start" style="padding-top: 20px">
                     <div class="text-body1 text-weight-bold">
                         Detalle Riesgo de Ingreso
                     </div>
-                    <q-separator class="q-mt-sm q-mb-md" />
+                    <q-separator />
                     <div
                         v-for="classRisk in studentRisk?.classesRisk"
                         :key="'classRisk_' + classRisk.id"
@@ -80,11 +80,15 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .q-card__section {
-    gap: 1rem;
+    gap: 10px;
 }
 
 .row {
     flex-wrap: nowrap;
     height: fit-content;
+}
+
+.q-separator {
+    margin: 10px 0;
 }
 </style>

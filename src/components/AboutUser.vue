@@ -2,7 +2,7 @@
     <q-expansion-item
         expand-icon-toggle
         icon="drag_indicator"
-        class="text-body1 text-weight-bolder"
+        class="text-body1 text-weight-bold"
         label="About"
         header-class="handle"
         default-opened
@@ -63,6 +63,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .q-card__section {
-    gap: 1rem;
+    gap: 10px;
+}
+
+.q-separator {
+    margin-top: 5px;
 }
 </style>

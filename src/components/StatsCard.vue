@@ -4,25 +4,27 @@
             <div class="row justify-between">
                 <q-avatar
                     size="40px"
-                    font-size="21px"
+                    font-size="25px"
                     color="light-green-5"
                     text-color="white"
                     :icon="icon"
                 />
 
                 <div class="column items-end">
-                    <div class="text-body2 text-weight-bold">{{ title }}</div>
-                    <div class="text-body1 text-weight-bolder">{{ stat }}</div>
+                    <div class="text-body1 text-weight-bold">{{ title }}</div>
+                    <div class="text-subtitle1 text-weight-bold">
+                        {{ stat }}
+                    </div>
                 </div>
             </div>
 
             <q-separator class="q-my-sm" />
 
             <div class="row justify-between">
-                <div class="text-body2 text-weight-bold">
+                <div class="text-body1 text-weight-bold">
                     {{ subtitleLeft }}
                 </div>
-                <div class="text-body2 text-weight-bold">
+                <div class="text-body1 text-weight-bold">
                     {{ subtitleRight }}
                 </div>
             </div>
